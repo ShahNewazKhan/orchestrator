@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  fireworq:
+    image: 'fireworq/fireworq'
+    environment: 
+      - 'FIREWORQ_DRIVER=in-memory'
+      - 'FIREWORQ_QUEUE_DEFAULT=default'
+    ports: 
+      - '8080:8080'
+  
