@@ -1,0 +1,32 @@
+# Default values for orchestrator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+brigade: 
+  ## These values are for the Generic Gateway.
+  ## Enabling this will start a service that handles webhooks from external clients.
+  ## To call this endpoint you need a special secret value that is configured once per project.
+  genericGateway:
+    enabled: true
+    registry: brigadecore
+    name: brigade-generic-gateway
+    # tag: latest
+    service:
+      name: brigade-generic-service
+      type: LoadBalancer  # Change to LoadBalancer if you want this externally available.
+      externalPort: 8081
+      internalPort: 8000
+      annotations: {}
+    serviceAccount:
+      create: true
+      name:
+      imagePullSecrets: []
+    ingress:
+      enabled: false
+  
+  kashti:
+    enabled: true
+    service:
+      type: LoadBalancer

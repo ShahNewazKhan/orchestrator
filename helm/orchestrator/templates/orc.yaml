@@ -1,0 +1,36 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: orc
+spec:
+  selector:
+    matchLabels:
+      app: orc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: orc
+    spec:
+      containers:
+      - name: orc
+        image: orc:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8082
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: orc
+  labels:
+    app: orc
+spec:
+  ports:
+  - port: 8082
+    targetPort: 8082
+    protocol: TCP
+  selector:
+    app: orc
