@@ -1,20 +1,20 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: orc
+  name: orchestrator
 spec:
   selector:
     matchLabels:
-      app: orc
+      app: orchestrator
   replicas: 1
   template:
     metadata:
       labels:
-        app: orc
+        app: orchestrator
     spec:
       containers:
-      - name: orc
-        image: orc:latest
+      - name: orchestrator
+        image: orchestrator:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8082
@@ -24,13 +24,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: orc
+  name: orchestrator
   labels:
-    app: orc
+    app: orchestrator
 spec:
   ports:
   - port: 8082
     targetPort: 8082
     protocol: TCP
   selector:
-    app: orc
+    app: orchestrator

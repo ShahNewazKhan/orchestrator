@@ -12,7 +12,7 @@ brigade:
     enabled: true
     registry: brigadecore
     name: brigade-generic-gateway
-    # tag: latest
+    tag: c362803
     service:
       name: brigade-generic-service
       type: LoadBalancer  # Change to LoadBalancer if you want this externally available.
