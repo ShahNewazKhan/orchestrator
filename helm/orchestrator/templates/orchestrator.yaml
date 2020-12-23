@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: orchestrator
-        image: orchestrator:latest
+        image: {{ .Values.orchestrator.image }}
         imagePullPolicy: IfNotPresent
         ports:
-          - containerPort: 8082
+          - containerPort: 3000
 
 ---
 
@@ -29,8 +29,8 @@ metadata:
     app: orchestrator
 spec:
   ports:
-  - port: 8082
-    targetPort: 8082
+  - port: 3000
+    targetPort: 3000
     protocol: TCP
   selector:
     app: orchestrator

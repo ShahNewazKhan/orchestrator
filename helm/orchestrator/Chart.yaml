@@ -26,3 +26,6 @@ dependencies:
   - name: brigade
     version: 1.7.1
     repository: https://brigadecore.github.io/charts
+  - name: brigade-project
+    version: 1.0.0
+    repository: https://brigadecore.github.io/charts

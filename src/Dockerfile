@@ -23,6 +23,6 @@ FROM scratch
 # Copy our static executable.
 COPY --from=builder /go/bin/orchestrator /go/bin/orchestrator
 
-EXPOSE 8082
+EXPOSE 3000
 # Run the orc binary.
 ENTRYPOINT ["/go/bin/orchestrator"]

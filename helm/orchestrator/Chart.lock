@@ -2,5 +2,8 @@ dependencies:
 - name: brigade
   repository: https://brigadecore.github.io/charts
   version: 1.7.1
-digest: sha256:b3f34ff059cd193fc08f944969cf9e3a001d8b4cb69adb328525889f69462b0e
-generated: "2020-11-29T09:58:30.083078406-08:00"
+- name: brigade-project
+  repository: https://brigadecore.github.io/charts
+  version: 1.0.0
+digest: sha256:26d8dc5107afc45d7934a572ec4b2715ecb28355e066ac1055e3a30518b5160b
+generated: "2020-12-22T21:54:26.24412827-08:00"

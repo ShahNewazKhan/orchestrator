@@ -9,7 +9,7 @@ export TAG ?= $(shell git rev-parse --short HEAD)
 
 build-images:
 	@eval $$(minikube docker-env) ;\
-	docker build -t orc:latest ../src
+	docker build -t orchestrator:$(TAG) ../src
 	
 get-tag:
 	echo $(TAG)
@@ -17,9 +17,8 @@ get-tag:
 deploy-minikube: build-images
 	kubectl config use-context minikube; \
 	helm upgrade minikube ./orchestrator \
-		--install 
-		# --set airflow.image=airflow-kubes:$(TAG) 
-		# --values orchestrator/values-minikube.yaml 
+		--install \
+		--set orchestrator.image=orchestrator:$(TAG)
 		# --debug
 
 delete-minikube:
