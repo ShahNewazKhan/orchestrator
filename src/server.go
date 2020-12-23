@@ -4,9 +4,10 @@ import (
 	"log"
 	"os"
 
+	"orchestrator/controllers"
+
 	"github.com/Kamva/mgm/v2"
 	"github.com/gofiber/fiber"
-	"github.com/jozsefsallai/fiber-todo-demo/controllers"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -24,11 +25,11 @@ func init() {
 func main() {
 	app := fiber.New()
 
-	app.Get("/api/jobs", controllers.GetAllTodos)
-	app.Get("/api/jobs/:id", controllers.GetTodoByID)
-	app.Post("/api/jobs", controllers.CreateTodo)
-	app.Patch("/api/jobs/:id", controllers.ToggleTodoStatus)
-	app.Delete("/api/jobs/:id", controllers.DeleteTodo)
+	app.Get("/api/jobs", controllers.GetAllJobs)
+	app.Get("/api/jobs/:id", controllers.GetJobByID)
+	app.Post("/api/jobs", controllers.CreateJob)
+	app.Patch("/api/jobs/:id", controllers.ToggleJobStatus)
+	app.Delete("/api/jobs/:id", controllers.DeleteJob)
 
 	app.Listen(3000)
 }
