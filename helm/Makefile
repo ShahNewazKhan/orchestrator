@@ -1,7 +1,3 @@
-# install:
-# 	helm repo add brigade https://brigadecore.github.io/charts
-# 	helm install -n brigade brigade/brigade --set genericGateway.enabled=true brigagde
-
 .PHONY: build-image build-helm
 .ONESHELL:
 
@@ -27,6 +23,7 @@ delete-minikube:
 
 install-deps: 
 	helm repo add brigade https://brigadecore.github.io/charts
+	helm repo add bitnami https://charts.bitnami.com/bitnami
 	cd orchestrator && helm dependency build
 
 start-mk:
