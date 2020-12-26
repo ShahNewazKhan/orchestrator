@@ -1,0 +1,18 @@
+title Orchestrator Job Lifecycle
+
+Coeus Backend->Orchestrator: POST /api/jobs
+Orchestrator->Brigade: POST /simpleevents/v1/<BRIGADE_PROJECT>/<PROJECT_SECRET> \n {"jobId":<JOB_ID>}
+Coeus Backend<--Orchestrator: {"ok": true, "job": {"_id": <JOB_ID>, "status": "PENDING", "completed": false}}
+Brigade->Task 0: docker run <PROJECT_IMAGE> -e JOB_ID: <JOB_ID>
+Orchestrator<-Task 0: PATCH /api/jobs/<JOB_ID>/status /n {"status":"STARTED"}
+Orchestrator-->Task 0: {"ok": true}
+Coeus Backend->Orchestrator: GET /api/jobs/<JOB_ID>
+Coeus Backend<<--Orchestrator: {"ok": true, "job":{"_id":<JOB_ID>, "status":"STARTED", "completed": false}}
+Orchestrator<-Task 0: PATCH /api/jobs/<JOB_ID>/status /n {"status":"RUNNING"}
+Orchestrator-->Task 0: {"ok": true}
+Coeus Backend->Orchestrator: GET /api/jobs/<JOB_ID>
+Coeus Backend<<--Orchestrator: {"ok": true, "job":{"_id":<JOB_ID>, "status":"RUNNING", "completed": false}}
+Orchestrator<-Task 0: PATCH /api/jobs/<JOB_ID>/status /n {"status":"DONE"}
+Orchestrator-->Task 0: {"ok": true}
+Coeus Backend->Orchestrator: GET /api/jobs/<JOB_ID>
+Coeus Backend<<--Orchestrator: {"ok": true, "job":{"_id":<JOB_ID>, "status":"DONE", "completed": true}}
