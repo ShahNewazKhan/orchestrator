@@ -5,5 +5,8 @@ dependencies:
 - name: brigade-project
   repository: https://brigadecore.github.io/charts
   version: 1.0.0
-digest: sha256:26d8dc5107afc45d7934a572ec4b2715ecb28355e066ac1055e3a30518b5160b
-generated: "2020-12-22T21:54:26.24412827-08:00"
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.3.2
+digest: sha256:2e4b781683aff140a8f68de9dd14af915e761f812933f58611f9a49a6d287b33
+generated: "2020-12-23T07:05:57.6444422-08:00"

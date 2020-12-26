@@ -13,7 +13,7 @@ import (
 
 func init() {
 
-	connectionString := os.ExpandEnv("mongodb://$MONGODB_USER:$MONGODB_PASS@MONGODB_HOST:$MONGODB_PORT")
+	connectionString := os.ExpandEnv("mongodb://$MONGODB_USER:$MONGODB_PASS@$MONGODB_HOST:$MONGODB_PORT")
 	log.Printf("mongo connection string: %s", connectionString)
 
 	err := mgm.SetDefaultConfig(nil, "jobs", options.Client().ApplyURI(connectionString))
@@ -29,6 +29,8 @@ func main() {
 	app.Get("/api/jobs/:id", controllers.GetJobByID)
 	app.Post("/api/jobs", controllers.CreateJob)
 	app.Patch("/api/jobs/:id", controllers.ToggleJobStatus)
+	app.Patch("/api/jobs/:id/brigade", controllers.UpdateJobDetails)
+	app.Patch("/api/jobs/:id/status", controllers.UpdateJobStatus)
 	app.Delete("/api/jobs/:id", controllers.DeleteJob)
 
 	app.Listen(3000)

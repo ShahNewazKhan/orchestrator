@@ -24,7 +24,7 @@ delete-minikube:
 install-deps: 
 	helm repo add brigade https://brigadecore.github.io/charts
 	helm repo add bitnami https://charts.bitnami.com/bitnami
-	cd orchestrator && helm dependency build
+	cd orchestrator && helm dependency update && helm dependency build
 
 start-mk:
 	minikube start \
