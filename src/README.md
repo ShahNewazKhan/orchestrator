@@ -11,12 +11,12 @@ Follow [install](https://github.com/emcrisostomo/fswatch#installation) instructi
 
 |Method| Endpoint | Description|
 |---|---|---|
-|`GET`| `/api/jobs` | lists all job in the database |
-|`GET`| `/api/jobs/:id`| retrieves a `job` based on its ID |
-|`POST`| `/api/jobs` | creates a `job` object and adds it to the database |
-|`PATCH` | `/api/jobs/:id` | changes the `Completed` property of a `job` based on its ID |
-|`PATCH` | `/api/jobs/:id/brigade` | adds the associated brigade `buildId` & `workerId` from the launched process  |
-|`PATCH` | `/api/jobs/:id/status` | changes the job status to one of ['PENDING','STARTED','RUNNING','DONE','ERRORED'] |
+|`GET`    | `/api/jobs` | lists all job in the database |
+|`GET`    | `/api/jobs/:id`| retrieves a `job` based on its ID |
+|`POST`   | `/api/jobs` | creates a `job` object and adds it to the database |
+|`PATCH`  | `/api/jobs/:id` | changes the `Completed` property of a `job` based on its ID |
+|`PATCH`  | `/api/jobs/:id/brigade` | adds the associated brigade `buildId` & `workerId` from the launched process  |
+|`PATCH`  | `/api/jobs/:id/status` | changes the job status to one of ['PENDING','STARTED','RUNNING','DONE','ERRORED'] |
 |`DELETE` | `/api/jobs/:id` | deletes a `job` based on its ID |
 
 

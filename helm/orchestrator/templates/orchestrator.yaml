@@ -16,6 +16,19 @@ spec:
       - name: orchestrator
         image: {{ .Values.orchestrator.image }}
         imagePullPolicy: IfNotPresent
+        env:
+          - name: BRIGADE_HOST
+            value: {{ .Values.orchestrator.environment  }}-brigade-generic-gateway 
+          - name: BRIGADE_PORT
+            value: "8081"
+          - name: MONGODB_USER
+            value: root
+          - name: MONGODB_PASS
+            value: rootpassword
+          - name: MONGODB_HOST
+            value: {{ .Values.orchestrator.environment  }}-mongodb
+          - name: MONGODB_PORT
+            value: "27017"
         ports:
           - containerPort: 3000
 

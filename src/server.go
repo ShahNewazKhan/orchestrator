@@ -8,6 +8,7 @@ import (
 
 	"github.com/Kamva/mgm/v2"
 	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/middleware"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -25,6 +26,11 @@ func init() {
 func main() {
 	app := fiber.New()
 
+	app.Use(middleware.Logger(middleware.LoggerConfig{
+		Format: "${time} ${method} ${requestid} ${path}",
+	}))
+
+	// jobs api
 	app.Get("/api/jobs", controllers.GetAllJobs)
 	app.Get("/api/jobs/:id", controllers.GetJobByID)
 	app.Post("/api/jobs", controllers.CreateJob)
@@ -32,6 +38,9 @@ func main() {
 	app.Patch("/api/jobs/:id/brigade", controllers.UpdateJobDetails)
 	app.Patch("/api/jobs/:id/status", controllers.UpdateJobStatus)
 	app.Delete("/api/jobs/:id", controllers.DeleteJob)
+
+	// projects api
+	app.Get("/api/projects", controllers.GetAllProjects)
 
 	app.Listen(3000)
 }

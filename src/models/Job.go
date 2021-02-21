@@ -26,9 +26,9 @@ type Job struct {
 	WorkerId         string `json:"workerId" bson:"workerId"`
 }
 
-func CreateJob(status, name string) *Job {
+func CreateJob(name string) *Job {
 	return &Job{
-		Status:    status,
+		Status:    "PENDING",
 		Name:      name,
 		Completed: false,
 	}

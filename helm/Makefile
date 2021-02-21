@@ -47,8 +47,10 @@ cleanup-minikube:
 kashti:
 	minikube service minikube-kashti
 
-fireworq:
-	kubectl port-forward service/fireworq 8080:8080
-
 generic-gateway:
 	kubectl port-forward service/minikube-brigade-generic-gateway 8081:8081
+
+brigade-api:
+	kubectl port-forward service/minikube-brigade-api 7745:7745
+
+local-dev: kashti brigade-api

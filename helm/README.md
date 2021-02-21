@@ -55,5 +55,5 @@ curl --header "Content-Type: application/json" \
     "key1": "value1",
     "key2": "value2"
 }' \
-  http://localhost:8081/simpleevents/v1/brigade-4c067ce5f05663c7d8fb6b0db0cbcf140284077fb3e907dff60d37
+  http://localhost:8081/simpleevents/v1/brigade-b47f9114e066cb0d78f91eff72e6813dc2ee897c1aeeafbc88fff0/genericsecret
 ```

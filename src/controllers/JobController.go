@@ -62,21 +62,22 @@ func GetJobByID(ctx *fiber.Ctx) {
 // CreateJob - POST /api/jobs
 func CreateJob(ctx *fiber.Ctx) {
 	params := new(struct {
-		Status string
-		Name   string
+		BrigadeProject string
+		BrigadeSecret  string
+		Name           string
 	})
 
 	ctx.BodyParser(&params)
 
-	if len(params.Status) == 0 || len(params.Name) == 0 {
+	if len(params.BrigadeProject) == 0 || len(params.Name) == 0 || len(params.BrigadeSecret) == 0 {
 		ctx.Status(400).JSON(fiber.Map{
 			"ok":    false,
-			"error": "Status or name not specified.",
+			"error": "Project, secret or name not specified.",
 		})
 		return
 	}
 
-	job := models.CreateJob(params.Status, params.Name)
+	job := models.CreateJob(params.Name)
 	err := mgm.Coll(job).Create(job)
 	if err != nil {
 		ctx.Status(500).JSON(fiber.Map{
@@ -86,24 +87,28 @@ func CreateJob(ctx *fiber.Ctx) {
 		return
 	}
 
+	go triggerBuild(job.IDField.ID.Hex(), params.BrigadeProject, params.BrigadeSecret)
+
 	ctx.JSON(fiber.Map{
 		"ok":  true,
 		"job": job,
 	})
+
 }
 
-func triggerBuild(jobId string) {
+func triggerBuild(jobId, brigadeProject, brigadeSecret string) {
 	//Encode the data
 	postBody, _ := json.Marshal(map[string]string{
 		"jobId": jobId,
 	})
 	responseBody := bytes.NewBuffer(postBody)
 
-	brigade_url := os.ExpandEnv("http://$BRIGADE_HOST:$BRIGADE_PORT/simpleevents/v1/$BRIGADE_PROJECT/$BRIGADE_SECRET")
-	log.Printf("Calling brigade at %v", brigade_url)
+	baseBrigadeUrl := os.ExpandEnv("http://$GENERIC_GATEWAY_HOST:$GENERIC_GATEWAY_PORT/simpleevents/v1")
+	brigadeUrl := fmt.Sprintf("%s/%s/%s", baseBrigadeUrl, brigadeProject, brigadeSecret)
+	log.Printf("Calling brigade at %v", brigadeUrl)
 
 	//Leverage Go's HTTP Post function to make request
-	resp, err := http.Post(brigade_url, "application/json", responseBody)
+	resp, err := http.Post(brigadeUrl, "application/json", responseBody)
 
 	//Handle Error
 	if err != nil {
