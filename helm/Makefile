@@ -6,6 +6,7 @@ export TAG ?= $(shell git rev-parse --short HEAD)
 build-images:
 	@eval $$(minikube docker-env) ;\
 	docker build -t orchestrator:$(TAG) ../src
+	docker build -t coeus-engine:$(TAG) ../../coeus-engine
 	
 get-tag:
 	echo $(TAG)

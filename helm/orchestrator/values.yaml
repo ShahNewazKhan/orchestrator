@@ -63,12 +63,15 @@ brigade-project:
     const { events, Job } = require("brigadier");
 
     events.on("simpleevent", (e, p) => { 
-      var echo = new Job("echo", "curlimages/curl:7.74.0")
+      var echo = new Job("echo", "coeus-engine:latest")
       echo.tasks = [
         "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/status",
         "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"STARTED\"}'",
         "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/brigade",
-        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"buildId\":\"$BUILD_ID\"}'"
+        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"buildId\":\"$BUILD_ID\"}'",
+        "make run",
+        ""export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/status",
+        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"DONE\"}'","
       ]
 
       echo.env = {
