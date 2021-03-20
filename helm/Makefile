@@ -39,7 +39,7 @@ start-mk:
 start: start-mk install-deps deploy-minikube
 
 restart:
-	make cleanup
+	make cleanup-minikube
 	make start
 
 cleanup-minikube:
