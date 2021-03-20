@@ -29,6 +29,9 @@ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
 ```
+## Setup
+- Add [GHCR Auth](https://docs.github.com/en/packages/guides/pushing-and-pulling-docker-images#authenticating-to-github-container-registry)
+- Request to join the [@orchestrator](https://github.com/orgs/knowship-io/teams/orchestrator) team
 
 ## 🚀 Launch Minikube / Orchestrator
 
