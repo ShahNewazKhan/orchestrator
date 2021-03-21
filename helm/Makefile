@@ -34,12 +34,12 @@ start-mk:
 		--memory=4096 \
 		--disk-size=20000mb \
 		--kubernetes-version 1.18.3 \
-		--vm-driver virtualbox ;
+		--driver virtualbox ;
 
 start: start-mk install-deps deploy-minikube
 
 restart:
-	make cleanup
+	make cleanup-minikube
 	make start
 
 cleanup-minikube:
