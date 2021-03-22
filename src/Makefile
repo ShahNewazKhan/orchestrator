@@ -45,5 +45,14 @@ launch:
 	MONGODB_PORT=27017 \
 	go run $(GO_FILES) & echo $$! > $(PID_FILE)
 
+up: 
+	BRIGADE_HOST=localhost \
+	BRIGADE_PORT=8081 \
+	MONGODB_USER=root \
+	MONGODB_PASS=rootpassword \
+	MONGODB_HOST=0.0.0.0 \
+	MONGODB_PORT=27017 \
+	go run server.go
+
 # .PHONY is used for reserving tasks words
 .PHONY: start before stop restart serve launch

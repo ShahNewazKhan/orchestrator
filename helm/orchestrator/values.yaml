@@ -45,7 +45,7 @@ brigade:
 
 brigade-project:
   ## Name of the project, in the form "user/project"                        
-  project: "coeus/echoer"                               
+  project: "coeus/coeus-detector"                               
                                                                               
   ## Domain/Org/Project                                                        
   repository: "knowship.io"                          
@@ -63,15 +63,16 @@ brigade-project:
     const { events, Job } = require("brigadier");
 
     events.on("simpleevent", (e, p) => { 
-      var echo = new Job("echo", "coeus-engine:latest")
+      var echo = new Job("echo", "curlimages/curl:7.74.0")
+      
       echo.tasks = [
-        "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/status",
-        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"STARTED\"}'",
+        "export URL=orchestrator:3000/api/jobs/$JOB_ID/status",
+        "curl --request PATCH $URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"STARTED\"}'",
         "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/brigade",
         "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"buildId\":\"$BUILD_ID\"}'",
-        "make run",
-        ""export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/status",
-        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"DONE\"}'","
+        "sleep 25",
+        "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/status",
+        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"DONE\"}'"
       ]
 
       echo.env = {

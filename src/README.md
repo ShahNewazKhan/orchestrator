@@ -28,11 +28,77 @@ Follow [install](https://github.com/emcrisostomo/fswatch#installation) instructi
 | `MONGODB_PASS` | `rootpassword` | Mongo user password|
 | `MONGODB_HOST` | `0.0.0.0` |Mongo host|
 | `MONGODB_PORT` | `27017` | Mongo port|
+
 ## Launch dev
 
 ```sh
 
 go run server.go
+```
+
+```sh
+curl --request POST '0.0.0.0:3000/api/jobs' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+      "brigadeProject": "brigade-6ed38d031ae3403c0608d0d5b2361a0e4e27ef2dedf2810291c433",
+      "name": "coeus/coeus-engine ",
+      "brigadeSecret": "WjJWdVpYSnBZM05sWTNKbGRBPT0="
+    }
+' --insecure
+```
+
+## Initiate a coeus-engine processing job
+
+### GET /api/projects
+```sh
+curl --request GET 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/projects' --insecure
+
+# RESPONSE 200 ok
+
+{
+    "ok":true,
+    "projects":[
+        {
+            "id":"brigade-1ac72d272cbb901c97f62f326939588d8eb5fe33e63c1fc467a8d1",
+            "name":"coeus/coeus-detector",
+            "genericGatewaySecret":"genericsecret"
+        }
+    ]
+}
+```
+### POST /api/jobs 
+```sh
+# populate brigateProject, name & secret from response object for /api/projects
+curl --request POST 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/jobs' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+      "brigadeProject": "brigade-1ac72d272cbb901c97f62f326939588d8eb5fe33e63c1fc467a8d1",
+      "name": "coeus/coeus-detector",
+      "brigadeSecret": "genericsecret"
+    }
+' --insecure
+
+REPONSE 200 OK: 
+
+{
+    "job":
+    {
+        "_id":"60582285ec6b565ae5d73bc8",
+        "created_at":"2021-03-22T04:52:21.998798079Z",
+        "updated_at":"2021-03-22T04:52:21.99880005Z",
+        "status":"PENDING",
+        "name":"coeus/coeus-engine ",
+        "complete":false,
+        "buildId":"",
+        "workerId":""
+    },
+    "ok":true
+}
+```
+
+
+```sh
+curl 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/jobs/60582285ec6b565ae5d73bc8' --insecure
 ```
 
 ```sh

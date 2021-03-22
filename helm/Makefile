@@ -7,7 +7,7 @@ build-images:
 	@eval $$(minikube docker-env) ;\
 	echo $$CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 	docker build -t orchestrator:$(TAG) --network=host ../src
-	docker build -t coeus-engine:$(TAG) ../../coeus-engine
+	DOCKER_BUILDKIT=1 docker build -t coeus-engine:$(TAG) ../../coeus-engine
 	
 get-tag:
 	echo $(TAG)
@@ -33,7 +33,7 @@ start-mk:
 		--cpus=4 \
 		--memory=4096 \
 		--disk-size=20000mb \
-		--kubernetes-version 1.18.3 \
+		--kubernetes-version 1.19.1 \
 		--driver virtualbox ;
 
 start: start-mk install-deps deploy-minikube
@@ -56,3 +56,9 @@ brigade-api:
 	kubectl port-forward service/minikube-brigade-api 7745:7745
 
 local-dev: kashti brigade-api
+
+connect-kubesail:
+	kubectl create -f https://byoc.kubesail.com/shahnewazkhan.yaml
+
+generic-gw-secret:
+	kubectl get secrets/brigade-6ed38d031ae3403c0608d0d5b2361a0e4e27ef2dedf2810291c433 --template={{.data.genericGatewaySecret}} | base64
