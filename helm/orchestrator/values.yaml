@@ -77,6 +77,7 @@ brigade-project:
 
       echo.env = {
         "JOB_ID": JSON.parse(e.payload).jobId,
+        "VIDEO_URL": JSON.parse(e.payload).videoUrl,
         "BUILD_ID": e.buildID
 
       }

@@ -65,19 +65,20 @@ func CreateJob(ctx *fiber.Ctx) {
 		BrigadeProject string
 		BrigadeSecret  string
 		Name           string
+		VideoUrl	   string
 	})
 
 	ctx.BodyParser(&params)
 
-	if len(params.BrigadeProject) == 0 || len(params.Name) == 0 || len(params.BrigadeSecret) == 0 {
+	if len(params.BrigadeProject) == 0 || len(params.Name) == 0 || len(params.BrigadeSecret) == 0 || len(params.VideoUrl) == 0 {
 		ctx.Status(400).JSON(fiber.Map{
 			"ok":    false,
-			"error": "Project, secret or name not specified.",
+			"error": "Project, secret, url or name not specified.",
 		})
 		return
 	}
 
-	job := models.CreateJob(params.Name)
+	job := models.CreateJob(params.Name, params.VideoUrl)
 	err := mgm.Coll(job).Create(job)
 	if err != nil {
 		ctx.Status(500).JSON(fiber.Map{
@@ -87,7 +88,7 @@ func CreateJob(ctx *fiber.Ctx) {
 		return
 	}
 
-	go triggerBuild(job.IDField.ID.Hex(), params.BrigadeProject, params.BrigadeSecret)
+	go triggerBuild(job.IDField.ID.Hex(), params.BrigadeProject, params.BrigadeSecret, params.VideoUrl)
 
 	ctx.JSON(fiber.Map{
 		"ok":  true,
@@ -96,10 +97,11 @@ func CreateJob(ctx *fiber.Ctx) {
 
 }
 
-func triggerBuild(jobId, brigadeProject, brigadeSecret string) {
+func triggerBuild(jobId, brigadeProject, brigadeSecret, videoUrl string) {
 	//Encode the data
 	postBody, _ := json.Marshal(map[string]string{
 		"jobId": jobId,
+		"videoUrl" : videoUrl,
 	})
 	responseBody := bytes.NewBuffer(postBody)
 
