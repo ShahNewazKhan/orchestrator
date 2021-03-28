@@ -54,20 +54,20 @@ spec:
 
 ---
 
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: dummy-orchestrator-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /dummy-orchestrator
-        pathType: Prefix
-        backend:
-          service:
-            name: orchestrator
-            port:
-              number: 3000
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: dummy-orchestrator-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#       - path: /dummy-orchestrator
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: orchestrator
+#             port:
+#               number: 3000

@@ -6,8 +6,8 @@ export TAG ?= $(shell git rev-parse --short HEAD)
 build-images:
 	@eval $$(minikube docker-env) ;\
 	echo $$CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
-	docker build -t orchestrator:$(TAG) --network=host ../src
-	DOCKER_BUILDKIT=1 docker build -t coeus-engine:$(TAG) ../../coeus-engine
+	DOCKER_BUILDKIT=1 docker build -t orchestrator:$(TAG) --network=host ../src
+	DOCKER_BUILDKIT=1 docker build -t coeus-engine:$(TAG) -t coeus-engine:latest ../../coeus-engine
 	
 get-tag:
 	echo $(TAG)

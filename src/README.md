@@ -37,12 +37,15 @@ go run server.go
 ```
 
 ```sh
+curl --request GET '0.0.0.0:3000/api/projects'
+
 curl --request POST '0.0.0.0:3000/api/jobs' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-      "brigadeProject": "brigade-6ed38d031ae3403c0608d0d5b2361a0e4e27ef2dedf2810291c433",
+      "brigadeProject": "brigade-1ac72d272cbb901c97f62f326939588d8eb5fe33e63c1fc467a8d1",
       "name": "coeus/coeus-engine ",
-      "brigadeSecret": "WjJWdVpYSnBZM05sWTNKbGRBPT0="
+      "brigadeSecret": "genericsecret",
+      "videoUrl": "https://www.youtube.com/watch?v=6t_ib-rxKUM"
     }
 ' --insecure
 ```
@@ -74,7 +77,8 @@ curl --request POST 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api
 --data-raw '{
       "brigadeProject": "brigade-1ac72d272cbb901c97f62f326939588d8eb5fe33e63c1fc467a8d1",
       "name": "coeus/coeus-detector",
-      "brigadeSecret": "genericsecret"
+      "brigadeSecret": "genericsecret",
+      "videoUrl": "https://www.youtube.com/watch?v=6t_ib-rxKUM"
     }
 ' --insecure
 
