@@ -68,8 +68,8 @@ brigade-project:
       detect.tasks = [
         "export URL=orchestrator:3000/api/jobs/$JOB_ID/status",
         "curl --request PATCH $URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"STARTED\"}' | jq .",
-        "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/brigade && export $PATCH_BODY={\"buildId\":\"$BUILD_ID\"}",
-        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw $PATCH_BODY | jq .",
+        "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/brigade",
+        "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"buildId\":\"'$BUILD_ID'\"}' | jq .",
         "/usr/src/entrypoint.sh",
         "export STATUS_URL=orchestrator:3000/api/jobs/$JOB_ID/status",
         "curl --request PATCH $STATUS_URL --header 'Content-Type: application/json' --data-raw '{\"status\":\"DONE\"}' | jq ."
@@ -78,8 +78,9 @@ brigade-project:
       detect.env = {
         "JOB_ID": JSON.parse(e.payload).jobId,
         "VIDEO_URL": JSON.parse(e.payload).videoUrl,
-        "BUILD_ID": e.buildID
-
+        "BUILD_ID": e.buildID,
+        "AWS_ACCESS_KEY_ID": p.secrets.awsAccessKeyId,
+        "AWS_SECRET_ACCESS_KEY": p.secrets.awsSecretAccessKey
       }
 
       detect.run()
@@ -128,7 +129,7 @@ brigade-project:
   ## Inside of the job's pod, $MY_ENV_VAR = "super awesome"
   # secrets:
   #   ## Example:
-  #   username: hello
+  #   hello: world
 
   ## OPTIONAL: vcsSidecar is the image that fetches a repo from a VCS
   ## The default sidecar uses Git to fetch a copy of the project.

@@ -45,9 +45,14 @@ launch:
 	MONGODB_PORT=27017 \
 	go run $(GO_FILES) & echo $$! > $(PID_FILE)
 
-up: 
-	BRIGADE_HOST=localhost \
-	BRIGADE_PORT=8081 \
+mongo-up:
+	docker-compose up mongo
+
+up: mongo-up
+	GENERIC_GATEWAY_HOST=localhost\
+	GENERIC_GATEWAY_PORT=7745 \
+	BRIGADE_API_HOST=localhost \
+	BRIGADE_API_PORT=8081 \
 	MONGODB_USER=root \
 	MONGODB_PASS=rootpassword \
 	MONGODB_HOST=0.0.0.0 \

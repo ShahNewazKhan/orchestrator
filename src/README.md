@@ -54,7 +54,7 @@ curl --request POST '0.0.0.0:3000/api/jobs' \
 
 ### GET /api/projects
 ```sh
-curl --request GET 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/projects' --insecure
+curl --request GET 'https://orchestrator.skynet2.shahnewazkhan.usw1.k8g8.com/api/projects' --insecure
 
 # RESPONSE 200 ok
 
@@ -72,7 +72,7 @@ curl --request GET 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/
 ### POST /api/jobs 
 ```sh
 # populate brigateProject, name & secret from response object for /api/projects
-curl --request POST 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/jobs' \
+curl --request POST 'https://orchestrator.skynet2.shahnewazkhan.usw1.k8g8.com/api/jobs' \
 --header 'Content-Type: application/json' \
 --data-raw '{
       "brigadeProject": "brigade-1ac72d272cbb901c97f62f326939588d8eb5fe33e63c1fc467a8d1",
