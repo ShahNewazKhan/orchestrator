@@ -1,33 +1,31 @@
-# Orchestrator 
+# Orchestrator
 
 ## Dependencies
 
-[fswatch](https://github.com/emcrisostomo/fswatch) is a file change monitor that receives notifications when the contents of the specified files or directories are modified. fswatch implements several monitors. It is used to do a live reload of the of the `go` codebase during local development.
+[fswatch](https://github.com/emcrisostomo/fswatch) is a file change monitor that receives notifications when the contents of the specified files or directories are modified. fswatch implements several monitors. It is used to do a live reload of the `go` codebase during local development.
 
-Follow [install](https://github.com/emcrisostomo/fswatch#installation) instructions for your system. 
-
+Follow [install](https://github.com/emcrisostomo/fswatch#installation) instructions for your system.
 
 ## Endpoints
 
-|Method| Endpoint | Description|
-|---|---|---|
-|`GET`    | `/api/jobs` | lists all job in the database |
-|`GET`    | `/api/jobs/:id`| retrieves a `job` based on its ID |
-|`POST`   | `/api/jobs` | creates a `job` object and adds it to the database |
-|`PATCH`  | `/api/jobs/:id` | changes the `Completed` property of a `job` based on its ID |
-|`PATCH`  | `/api/jobs/:id/brigade` | adds the associated brigade `buildId` & `workerId` from the launched process  |
-|`PATCH`  | `/api/jobs/:id/status` | changes the job status to one of ['PENDING','STARTED','RUNNING','DONE','ERRORED'] |
-|`DELETE` | `/api/jobs/:id` | deletes a `job` based on its ID |
-
+| Method   | Endpoint                | Description                                                                       |
+| -------- | ----------------------- | --------------------------------------------------------------------------------- |
+| `GET`    | `/api/jobs`             | lists all job in the database                                                     |
+| `GET`    | `/api/jobs/:id`         | retrieves a `job` based on its ID                                                 |
+| `POST`   | `/api/jobs`             | creates a `job` object and adds it to the database                                |
+| `PATCH`  | `/api/jobs/:id`         | changes the `Completed` property of a `job` based on its ID                       |
+| `PATCH`  | `/api/jobs/:id/brigade` | adds the associated brigade `buildId` & `workerId` from the launched process      |
+| `PATCH`  | `/api/jobs/:id/status`  | changes the job status to one of ['PENDING','STARTED','RUNNING','DONE','ERRORED'] |
+| `DELETE` | `/api/jobs/:id`         | deletes a `job` based on its ID                                                   |
 
 ## Envars
 
-|Envar|Default|Description|
-|---|---|---|
-| `MONGODB_USER` | `root` | Mongo user|
-| `MONGODB_PASS` | `rootpassword` | Mongo user password|
-| `MONGODB_HOST` | `0.0.0.0` |Mongo host|
-| `MONGODB_PORT` | `27017` | Mongo port|
+| Envar          | Default        | Description         |
+| -------------- | -------------- | ------------------- |
+| `MONGODB_USER` | `root`         | Mongo user          |
+| `MONGODB_PASS` | `rootpassword` | Mongo user password |
+| `MONGODB_HOST` | `0.0.0.0`      | Mongo host          |
+| `MONGODB_PORT` | `27017`        | Mongo port          |
 
 ## Launch dev
 
@@ -53,8 +51,9 @@ curl --request POST '0.0.0.0:3000/api/jobs' \
 ## Initiate a coeus-engine processing job
 
 ### GET /api/projects
+
 ```sh
-curl --request GET 'https://orchestrator.skynet2.shahnewazkhan.usw1.k8g8.com/api/projects' --insecure
+curl --request GET 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/projects' --insecure
 
 # RESPONSE 200 ok
 
@@ -69,10 +68,12 @@ curl --request GET 'https://orchestrator.skynet2.shahnewazkhan.usw1.k8g8.com/api
     ]
 }
 ```
-### POST /api/jobs 
+
+### POST /api/jobs
+
 ```sh
 # populate brigateProject, name & secret from response object for /api/projects
-curl --request POST 'https://orchestrator.skynet2.shahnewazkhan.usw1.k8g8.com/api/jobs' \
+curl --request POST 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/jobs' \
 --header 'Content-Type: application/json' \
 --data-raw '{
       "brigadeProject": "brigade-1ac72d272cbb901c97f62f326939588d8eb5fe33e63c1fc467a8d1",
@@ -82,7 +83,7 @@ curl --request POST 'https://orchestrator.skynet2.shahnewazkhan.usw1.k8g8.com/ap
     }
 ' --insecure
 
-REPONSE 200 OK: 
+REPONSE 200 OK:
 
 {
     "job":
@@ -99,7 +100,6 @@ REPONSE 200 OK:
     "ok":true
 }
 ```
-
 
 ```sh
 curl 'https://orchestrator.skynet.shahnewazkhan.usw1.k8g8.com/api/jobs/60583ed0fae81b059f6dd85d' --insecure
