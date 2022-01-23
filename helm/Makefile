@@ -5,9 +5,10 @@ export TAG ?= $(shell git rev-parse --short HEAD)
 
 build-images:
 	@eval $$(minikube docker-env) ;\
+	echo "building images ..."
 	echo $$CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
 	DOCKER_BUILDKIT=1 docker build -t orchestrator:$(TAG) --network=host ../src
-	DOCKER_BUILDKIT=1 docker build -t coeus-engine:$(TAG) -t coeus-engine:latest ../../coeus-engine
+	# DOCKER_BUILDKIT=1 docker build -t coeus-engine:$(TAG) -t coeus-engine:latest ../../coeus-engine
 	
 get-tag:
 	echo $(TAG)
@@ -34,6 +35,8 @@ start-mk:
 		--memory=4096 \
 		--disk-size=20000mb \
 		--kubernetes-version 1.19.1 \
+		--dns-proxy=false \
+		--host-dns-resolver=true \
 		--driver virtualbox ;
 
 create-aws-secrets:
