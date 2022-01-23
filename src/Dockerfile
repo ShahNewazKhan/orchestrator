@@ -1,6 +1,8 @@
 ############################
 # STEP 1 build executable binary
 ############################
+# Pinnin to alpine3.12 to resolve docker build DNS error 
+# https://github.com/gliderlabs/docker-alpine/issues/386
 FROM golang:alpine3.12 AS builder
 
 # Install git for fetching go dependencies.
